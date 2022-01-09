@@ -1,5 +1,5 @@
 ### I. Docker compose
-I use `docker-compose.yml` file from `bitnami`.
+I use `docker-compose.yml` file from `bitnami`. See https://github.com/bitnami/bitnami-docker-kafka for further info.
 ##### 1. Start Docker:
 ```
 docker compose up -d
