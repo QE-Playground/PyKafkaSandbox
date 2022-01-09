@@ -8,10 +8,10 @@ api_version = (0, 10, 1)
 
 def create_topic(topic_name):
     """
-        Create topic
-        :param topic_name:
-        :return:
-        """
+    Create topic
+    :param topic_name:
+    :return:
+    """
     admin_client = KafkaAdminClient(
         bootstrap_servers=bootstrap_servers,
         client_id=client_id,
