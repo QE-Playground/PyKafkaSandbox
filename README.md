@@ -23,5 +23,5 @@ pip install -r requirements.txt
 ### III. Running test cases:
 ```
 cd tests
-pytest test_create_topic.py
+pytest test_create_topic.py -s
 ```

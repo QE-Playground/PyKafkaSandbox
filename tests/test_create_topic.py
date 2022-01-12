@@ -1,15 +1,15 @@
 import datetime
 
-from tests.conftest import is_topic_exist, create_topic
+from tests.conftest import topic_exists, create_topic
 
 topic = 'my_kafka_topic'
 
 
 def test_create_topic():
-    if not is_topic_exist(topic):
+    if not topic_exists(topic):
         create_topic(topic)
 
-    assert is_topic_exist(topic)
+    assert topic_exists(topic)
 
 
 def test_create_topic_with_random_name():
@@ -17,4 +17,4 @@ def test_create_topic_with_random_name():
     random_topic = f'{topic}_{timestamp}'
 
     create_topic(random_topic)
-    assert is_topic_exist(random_topic)
+    assert topic_exists(random_topic)

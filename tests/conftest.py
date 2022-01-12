@@ -1,5 +1,7 @@
-from kafka import KafkaClient, KafkaConsumer
+from kafka import KafkaConsumer
 from kafka.admin import KafkaAdminClient, NewTopic
+
+from utils.Logger import Logger
 
 bootstrap_servers = 'localhost:9093'
 client_id = 'test'
@@ -22,6 +24,9 @@ def create_topic(topic_name):
     admin_client.create_topics(new_topics=topic_list, validate_only=False)
 
 
-def is_topic_exist(topic_name):
+def topic_exists(topic_name):
     consumer = KafkaConsumer(bootstrap_servers=bootstrap_servers)
-    return topic_name in consumer.topics()
+    available_topics = consumer.topics()
+    logger = Logger()
+    logger.log.info(f'Available topics: {available_topics}')
+    return topic_name in available_topics
