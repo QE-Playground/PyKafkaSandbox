@@ -27,3 +27,8 @@ pip install -r requirements.txt
 cd tests
 pytest test_create_topic.py -s
 ```
+
+### Donations:
+If you think that any information you obtained here is worth of some money and are willing to pay for it, feel free to send any amount through paypal.
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/TruongDang85)
