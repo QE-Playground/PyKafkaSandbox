@@ -1,7 +1,8 @@
-from kafka import KafkaAdminClient, KafkaConsumer
+from kafka import KafkaAdminClient, KafkaConsumer, KafkaProducer
 from kafka.admin import NewTopic
 
 from src.libs.Singleton import Singleton
+from src.utils.Bytes import Bytes
 from src.utils.Logger import Logger
 
 
@@ -29,6 +30,16 @@ class Kafka(object, metaclass=Singleton):
 
         topic_list = [NewTopic(name=topic_name, num_partitions=1, replication_factor=1)]
         admin_client.create_topics(new_topics=topic_list, validate_only=False)
+
+    def create_topic_if_not_available(self, topic):
+        """
+        Create topic if that topic is not available.
+        :param topic:
+        :return:
+        """
+        available_topics = self.get_available_topics()
+        if topic not in available_topics:
+            self.create_topic(topic_name=topic)
 
     def topic_exists(self, topic_name):
         """
@@ -63,3 +74,39 @@ class Kafka(object, metaclass=Singleton):
 
         available_topics = self.get_available_topics()
         admin_client.delete_topics(topics=available_topics)
+
+    def send_message(self, topic, value):
+        """
+        Send kafka message.
+        :param topic:
+        :param value:
+        :return:
+        """
+        self.create_topic_if_not_available(topic=topic)
+
+        producer = KafkaProducer(
+            bootstrap_servers=self.bootstrap_servers,
+            api_version=self.api_version
+        )
+
+        producer.send(topic=topic, value=value)
+
+    def message_is_sent_successfully(self, topic, value):
+        """
+
+        :param topic:
+        :param value:
+        :return:
+        """
+        consumer = KafkaConsumer(
+            topic,
+            bootstrap_servers=self.bootstrap_servers,
+            api_version=self.api_version,
+            auto_offset_reset='earliest'
+        )
+
+        for message in consumer:
+            bytes_compare = Bytes()
+            if bytes_compare.compare(value, message.value, encoding='utf8'):
+                return True
+        return False
