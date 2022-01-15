@@ -17,7 +17,7 @@ class Kafka(object, metaclass=Singleton):
 
     def create_topic(self, topic_name):
         """
-        Create topic
+        Create topic named topic_name.
         :param topic_name:
         :return:
         """
@@ -31,8 +31,35 @@ class Kafka(object, metaclass=Singleton):
         admin_client.create_topics(new_topics=topic_list, validate_only=False)
 
     def topic_exists(self, topic_name):
-        consumer = KafkaConsumer(bootstrap_servers=self.bootstrap_servers)
-        available_topics = consumer.topics()
+        """
+        Check whether topic_name exists or not.
+        :param topic_name:
+        :return: True if topic_name exists, False otherwise.
+        """
+        available_topics = self.get_available_topics()
         logger = Logger()
         logger.log.info(f'Available topics: {available_topics}')
         return topic_name in available_topics
+
+    def get_available_topics(self):
+        """
+        Get available topics.
+        :return: set of available topics.
+        """
+        consumer = KafkaConsumer(bootstrap_servers=self.bootstrap_servers)
+        available_topics = consumer.topics()
+        return available_topics
+
+    def delete_all_topics(self):
+        """
+        Delete all available topics.
+        :return:
+        """
+        admin_client = KafkaAdminClient(
+            bootstrap_servers=self.bootstrap_servers,
+            client_id=self.client_id,
+            api_version=self.api_version
+        )
+
+        available_topics = self.get_available_topics()
+        admin_client.delete_topics(topics=available_topics)

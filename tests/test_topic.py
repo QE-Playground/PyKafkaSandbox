@@ -20,3 +20,9 @@ def test_create_topic_with_random_name():
     kafka = Kafka()
     kafka.create_topic(random_topic)
     assert kafka.topic_exists(random_topic)
+
+
+def test_delete_all_topics():
+    kafka = Kafka()
+    kafka.delete_all_topics()
+    assert kafka.get_available_topics() == set()
