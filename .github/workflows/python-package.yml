@@ -40,7 +40,7 @@ jobs:
         docker compose up -d
     - name: Test with pytest
       run: |
-        pytest
+        pytest -s
     - name: Stop docker
       run: |
         docker compose down
