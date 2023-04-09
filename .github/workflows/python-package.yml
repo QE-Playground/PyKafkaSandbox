@@ -38,6 +38,7 @@ jobs:
     - name: Start docker
       run: |
         docker compose up -d
+        docker compose ps
     - name: Test with pytest
       run: |
         pytest -s
