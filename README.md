@@ -28,6 +28,8 @@ cd tests
 pytest test_create_topic.py -s
 ```
 
+![https://github.com/Misa-Playground/PyKafkaSandbox/blob/master/Screenshot%202023-04-09%20at%2021.33.10.png](https://github.com/Misa-Playground/PyKafkaSandbox/blob/master/Screenshot%202023-04-09%20at%2021.33.10.png)
+
 ### Donations:
 If you think that any information you obtained here is worth of some money and are willing to pay for it, feel free to send any amount through paypal.
 
